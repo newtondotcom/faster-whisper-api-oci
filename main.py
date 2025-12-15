@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 from mutagen import File
-from utils import format_duration
-from fw_utils import transcribe
-from auth import verify_api_key_from_env
+from lib.utils import format_duration
+from lib.fw_utils import transcribe
+from lib.auth import verify_api_key_from_env
 from functools import wraps
 from dotenv import load_dotenv
 import os
