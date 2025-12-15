@@ -13,3 +13,11 @@ dev:
 
 generate-key:
     uv run python scripts/generate_key.py
+
+health-prod:
+    curl -X GET "https://fwao.myr-project.eu/health"
+
+duration-prod: 
+    curl -X POST "https://fwao.myr-project.eu/duration" \
+        -H "Authorization: Bearer ${API_KEY:-your-api-key}" \
+        -F "file=@test/videoplayback.mp3"

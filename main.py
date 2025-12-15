@@ -12,6 +12,29 @@ import uuid
 load_dotenv()
 
 app = Flask(__name__)
+# Increase max file upload size to 500MB (for large audio files)
+app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500MB
+
+# Configure Flask to work behind a reverse proxy
+# This allows Flask to trust X-Forwarded-* headers from proxies
+from werkzeug.middleware.proxy_fix import ProxyFix
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
+
+# Error handler for request entity too large
+@app.errorhandler(413)
+def request_entity_too_large(error):
+    return jsonify({"error": "File too large. Maximum size is 500MB"}), 413
+
+# Error handler for bad requests
+@app.errorhandler(400)
+def bad_request(error):
+    # Log the error for debugging
+    import traceback
+    app.logger.error(f"Bad Request: {error}")
+    app.logger.error(f"Request method: {request.method}")
+    app.logger.error(f"Request path: {request.path}")
+    app.logger.error(f"Request headers: {dict(request.headers)}")
+    return jsonify({"error": "Bad request. Please check your request format and ensure Content-Type is multipart/form-data for file uploads"}), 400
 
 
 def require_api_key(f):

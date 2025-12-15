@@ -8,10 +8,14 @@ GUNICORN_TIMEOUT=${GUNICORN_TIMEOUT:-300}
 GUNICORN_LOG_LEVEL=${GUNICORN_LOG_LEVEL:-info}
 
 # Run gunicorn with proper signal handling
+# Increase request limits for large file uploads
 exec gunicorn \
     --bind "$GUNICORN_BIND" \
     --workers "$GUNICORN_WORKERS" \
     --timeout "$GUNICORN_TIMEOUT" \
+    --limit-request-line 8190 \
+    --limit-request-fields 32768 \
+    --limit-request-field_size 8190 \
     --access-logfile - \
     --error-logfile - \
     --log-level "$GUNICORN_LOG_LEVEL" \
