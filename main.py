@@ -42,6 +42,13 @@ def require_api_key(f):
 def hello_world():
     return "<p>Hello, World!</p>"
 
+@app.route("/health")
+def health():
+    """
+    Health check endpoint. Returns 200 if the service is running.
+    """
+    return jsonify({"status": "healthy"}), 200
+
 @app.route("/duration", methods=["POST"])
 @require_api_key
 def transcription():
