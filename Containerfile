@@ -1,11 +1,13 @@
-# syntax=docker/dockerfile:1.4
-FROM --platform=$BUILDPLATFORM python:3.10-alpine AS builder
+FROM python:3.12-slim AS builder
 
 WORKDIR /app
 
-COPY requirements.txt /app
+RUN pip install --upgrade pip
+
+COPY pyproject.toml /app
+
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip3 install -r requirements.txt
+    pip3 install .
 
 COPY . /app
 
