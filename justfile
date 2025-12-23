@@ -21,3 +21,8 @@ duration-prod:
     curl -X POST "https://fwao.myr-project.eu/duration" \
         -H "Authorization: Bearer ${API_KEY:-your-api-key}" \
         -F "file=@test/videoplayback.mp3"
+
+transcribe-prod: 
+    curl -X POST "https://fwao.myr-project.eu/transcribe" \
+        -H "Authorization: Bearer ${API_KEY:-your-api-key}" \
+        -F "file=@test/videoplayback.mp3"

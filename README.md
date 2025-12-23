@@ -2,3 +2,7 @@
 
 
 This a Flask API for [Faster Whisper](https://github.com/SYSTRAN/faster-whisper), primary designed to run on Ampere A1 VM, part of [Oracle Cloud Infrastructure Free Tier](https://www.oracle.com/cloud/free/).
+
+The image is available [here](https://hub.docker.com/r/newtondotcom/fwao/tags).
+
+Just pull it, fill in the secrets in [.env]() and spin it !
